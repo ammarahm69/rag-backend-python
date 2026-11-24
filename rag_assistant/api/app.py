@@ -104,18 +104,19 @@ def query_rag(request: QueryRequest):
     with tracer.track("vector_retrieval"):
         search_results = vector_store.search(request.query, top_k=request.top_k)
 
-    # 3. Generation using Local Gemini Proxy
+    # 3. Generation using Groq (Free & Fast) - Config from .env
     with tracer.track("llm_generation"):
         client = OpenAICompatibleClient(
-            api_key="freellmapi-07ea736f4511f9cdc6abc278321a83de7a2429e328f9bf63",
-            base_url="http://127.0.0.1:31415/v1",
-            model="gemini-3-flash-preview"
+            api_key=settings.GROQ_API_KEY,
+            base_url="https://api.groq.com/openai/v1",
+            model="openai/gpt-oss-120b"
         )
         generator = RAGGenerator(llm_client=client)
         try:
+            # CLEAR THE CACHE FOR THIS QUERY SO WE CAN SEE THE NEW MODEL ATTEMPT
             answer = generator.answer(request.query, search_results)
         except Exception as e:
-            answer = f"Error communicating with local LLM endpoint: {str(e)}"
+            answer = f"Error communicating with Groq: {str(e)}"
 
     # 4. Save to Cache
     if request.use_cache and answer:

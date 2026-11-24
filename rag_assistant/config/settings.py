@@ -20,6 +20,11 @@ class Settings(BaseSettings):
     CHROMA_HOST: str = "localhost"
     CHROMA_PORT: int = 8000
     CHROMA_API_KEY: Optional[str] = None
+
+    # LLM Provider Keys (loaded from .env)
+    GROQ_API_KEY: Optional[str] = None
+    ANTHROPIC_API_KEY: Optional[str] = None
+
     # Models
     DEFAULT_EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
     EMBEDDING_MODELS: dict[str, str] = {
