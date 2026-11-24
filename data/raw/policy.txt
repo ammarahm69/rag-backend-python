@@ -1,6 +1,0 @@
-Enterprise Policy: Remote Work
-Effective Date: 2024-01-01
-
-Employees are allowed to work remotely up to 3 days per week.
-All remote work must be coordinated with the direct manager.
-Security protocols must be followed at all times.
